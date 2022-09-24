@@ -4,7 +4,7 @@ import 'dotenv/config';
 import { User } from './schemas/User'
 import { Product } from './schemas/Product';
 import { withItemData, statelessSessions } from '@keystone-next/keystone/session'
-
+import { ProductImage } from './schemas/ProductImage';
 const databaseUrl = process.env.DataDATABASE_URL
 
 const sessionConfig = {
@@ -29,7 +29,8 @@ export default withAuth(config({
     },
     lists: createSchema({
         User,
-        Product
+        Product,
+        ProductImage
     }),
     db: {
         adapter: 'mongoose',

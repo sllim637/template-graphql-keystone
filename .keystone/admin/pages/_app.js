@@ -9,6 +9,8 @@ import * as viewda7608bd from '../../../node_modules/@keystone-next/fields/types
 import * as view51e59d01 from '../../../node_modules/@keystone-next/fields/types/password/views';
 import * as view3df51fdd from '../../../node_modules/@keystone-next/fields/types/timestamp/views';
 import * as view39d2dab3 from '../../../node_modules/@keystone-next/fields/types/select/views';
+import * as view41242397 from '../../../node_modules/@keystone-next/fields/types/integer/views';
+import * as view871bf16d from '../../../node_modules/@keystone-next/cloudinary/views';
 
 const adminConfig = {};
 
@@ -18,6 +20,8 @@ const fieldViews = {
   view51e59d01,
   view3df51fdd,
   view39d2dab3,
+  view41242397,
+  view871bf16d,
 };
 
 const lazyMetadataQuery = {
@@ -192,7 +196,7 @@ export default function App({ Component, pageProps }) {
     <Core>
       <KeystoneProvider
         adminConfig={adminConfig}
-        adminMetaHash="1mkhgv3"
+        adminMetaHash="1dysu31"
         fieldViews={fieldViews}
         lazyMetadataQuery={lazyMetadataQuery}
       >
