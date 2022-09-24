@@ -1,28 +1,50 @@
+import { createAuth } from '@keystone-next/auth';
 import { config, createSchema } from '@keystone-next/keystone/schema';
 import 'dotenv/config';
+import { User } from './schemas/User'
+import { Product } from './schemas/Product';
+import { withItemData, statelessSessions } from '@keystone-next/keystone/session'
 
 const databaseUrl = process.env.DataDATABASE_URL
 
 const sessionConfig = {
-    maxAge : 60 * 60*24*360,
-    secret : process.env.COOKIE_SECRET,
+    maxAge: 60 * 60 * 24 * 360,
+    secret: process.env.COOKIE_SECRET,
 }
-
-export default config({
+const { withAuth } = createAuth({
+    listKey: 'User',
+    identityField: 'email',
+    secretField: 'password',
+    initFirstItem: {
+        fields: ['name', 'email', 'password'],
+        //add roles here
+    }
+})
+export default withAuth(config({
     server: {
         cors: {
             origin: [process.env.FRONTEND_URL],
-            credentials : true
+            credentials: true
         }
     },
-    lists: createSchema({}),
+    lists: createSchema({
+        User,
+        Product
+    }),
     db: {
-        adapter : 'mongoose',
-        url : databaseUrl
+        adapter: 'mongoose',
+        url: databaseUrl
         //data seeding there
     },
-    ui : {
+    ui: {
         // change this for roles
-        isAccessAllowed : () => true
-    }
-})
+        isAccessAllowed: ({ session }) => {
+            console.log(session);
+
+            return !!session?.data;
+        }
+    },
+    session: withItemData(statelessSessions(sessionConfig), {
+        User: `id name email`
+    })
+})) 
